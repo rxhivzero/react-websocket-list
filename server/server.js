@@ -15,6 +15,7 @@ let eventList = [];
     camera_id: index,
     starting_timestamp: date.toLocaleString(),
     prediction: 'car',
+    category:'people',
     thumbnail: 'https://i.imgur.com/2kMzC4g.png',
     viewed: false
   })
@@ -66,6 +67,35 @@ io.on('connection', function (socket) {
       return new Date(b.starting_timestamp) - new Date(a.starting_timestamp);
     })
     socket.emit('eventList', eventList);
+  });
+  setInterval(function(){
+    const index = eventList.length+1;
+    const date = new Date();
+    date.setSeconds(index);
+    const event = {
+      event_id: index,
+      camera_id: index,
+      starting_timestamp: date.toLocaleString(),
+      prediction: 'car',
+      category:'people',
+      thumbnail: 'https://i.imgur.com/2kMzC4g.png',
+      viewed: false
+    }
+    eventList.push(event)
+    eventList = eventList.sort(function (a, b) {
+      return new Date(b.starting_timestamp) - new Date(a.starting_timestamp);
+    })
+    socket.emit('addEvent', event);
+  }, 3000);
+
+  socket.on('set-category', function (showEvent) {
+    eventList = eventList.filter(event => {
+      if(event.event_id === showEvent.event_id){
+        event.category = showEvent.category;
+      }
+      return event;
+    });
+    console.log(showEvent);
   });
 
   socket.on('disconnect', function () {

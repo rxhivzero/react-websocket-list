@@ -1,7 +1,6 @@
 import React from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-
-
+import { log } from 'util';
 
 class EventList extends React.Component {
   constructor(props) {
@@ -15,12 +14,13 @@ class EventList extends React.Component {
     this.setViewed = this.setViewed.bind(this);
   }
   onRowSelect(row, isSelected, e) {
-    const { eventList } = this.props.event;
+    const { showModal , event } = this.props;
+    const { eventList } = event;
     let filterEvent = eventList.filter(event => {
       return event.event_id === row.event_id;
     });
     filterEvent[0].viewed = isSelected;
-
+    showModal(row);
     this.setState({
       selectList: eventList
     });
@@ -62,10 +62,11 @@ class EventList extends React.Component {
         <button className="btn btn-info" onClick={() => { getEventList() }}>取得server未讀資料</button>
         <button className="btn btn-info" onClick={() => { recoveryEvent() }}>復原server未讀資料</button>
 
-        <BootstrapTable height='700px' data={eventList} selectRow={selectRowProp} >
+        <BootstrapTable height='400px' data={eventList} selectRow={selectRowProp} >
           <TableHeaderColumn dataField="event_id" isKey={true} dataAlign="center" dataSort={true}>event_id</TableHeaderColumn>
           <TableHeaderColumn dataField="camera_id" dataAlign="center">camera_id</TableHeaderColumn>
           <TableHeaderColumn dataField="starting_timestamp" dataAlign="center" dataSort={true}>starting_timestamp</TableHeaderColumn>
+          <TableHeaderColumn dataField="category" dataAlign="center">category</TableHeaderColumn>
           <TableHeaderColumn dataField="prediction" dataAlign="center">prediction</TableHeaderColumn>
           <TableHeaderColumn dataField="thumbnail" dataAlign="center" dataFormat={this.imageFormatter}>thumbnail</TableHeaderColumn>
         </BootstrapTable>
