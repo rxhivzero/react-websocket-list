@@ -7,3 +7,47 @@
 .btn-info{
   margin: 20px 0px 0px 20px;
 }
+
+.modalDialog {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 99;
+  >div {
+    width: 500px;
+    height: 200px;
+    position: relative;
+    margin: 10% auto;
+    background: #fff;
+    .colse{
+      float: right;
+    }
+    .content{
+      height: 100%;
+      width: 100%;
+      display:flex;
+      .icon{
+        flex: 1;
+      }
+      .info{
+        flex: 3;
+        >div{
+          padding: 20px;
+        }
+        .category{
+          display:flex;
+          .show{
+            color: red;
+          }
+        }
+      }
+    }
+  }
+}
+
+.hidden{
+  display:none;
+}
