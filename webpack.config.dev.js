@@ -79,7 +79,7 @@ const config = {
     new ExtractTextPlugin({ filename: './styles/style.css', disable: true, allChunks: true }),
     new CopyWebpackPlugin([{ from: 'public', to: 'public' }]),
     new webpack.HotModuleReplacementPlugin(),
-    //new OpenBrowserPlugin({ url: 'http://localhost:3000' }),
+    new OpenBrowserPlugin({ url: 'http://localhost:3000' }),
   ],
 };
 

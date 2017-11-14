@@ -25,8 +25,9 @@ eventList = eventList.sort(function (a, b) {
   return new Date(b.starting_timestamp) - new Date(a.starting_timestamp);
 })
 
-io.on('connection', function (socket) {
+let interval;
 
+io.on('connection', function (socket) {
   socket.emit('eventList', eventList);
 
   socket.on('new-alarm-events', function () {
@@ -68,7 +69,8 @@ io.on('connection', function (socket) {
     })
     socket.emit('eventList', eventList);
   });
-  setInterval(function(){
+
+  interval = setInterval(function(){
     const index = eventList.length+1;
     const date = new Date();
     date.setSeconds(index);
@@ -95,10 +97,10 @@ io.on('connection', function (socket) {
       }
       return event;
     });
-    console.log(showEvent);
   });
 
   socket.on('disconnect', function () {
+    clearInterval(interval)
   });
 });
 
