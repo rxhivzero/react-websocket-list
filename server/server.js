@@ -60,6 +60,7 @@ io.on('connection', function (socket) {
         camera_id: index,
         starting_timestamp: date.toLocaleString(),
         prediction: 'car',
+        category:'people',
         thumbnail: 'https://i.imgur.com/2kMzC4g.png',
         viewed: false
       })
